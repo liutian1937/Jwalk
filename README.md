@@ -8,4 +8,4 @@ Jwalk - JavaScript Animation Library . Smaller , Faster , Stronger
 <p>动画执行的方式采用Css3/Js Tween算法相结合的方式，对于高级浏览器采用css3执行动画效果，不支持css3的采用缓动函数，默认集成了（linear，ease-in，ease-out，ease-in-out）四种动画效果，如果需要更多效果，可以参考<a href="http://easings.net/zh-cn" target="_blank">Easing functions</a>，<a href="http://www.gizma.com/easing/" target="_blank">Easing Equations</a>，<a href="http://www.cnblogs.com/cloudgamer/archive/2009/01/06/Tween.html" target="_blank">JavaScript Tween算法及缓动效果</a>。</p>
 <p>Jwalk未压缩版本有粗糙的注释，大家可以扩展功能后自行压缩，欢迎尽情蹂躏。<br/>时间匆忙，不足之处欢迎给出意见。Email：ok8008@yeah.net</p>
 
-<a href="http://liutian1937.github.io/Jwalk/" target="_blank">Jwalk - JavaScript Animation Library</a>
+Demo：<a href="http://liutian1937.github.io/Jwalk/" target="_blank">Jwalk - JavaScript Animation Library</a>
