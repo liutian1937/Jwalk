@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jwalk - JavaScript Animation Library</title>
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.0/pure-min.css" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="css/style.css" />
+<body>
+	<div class="pure-g-r" id="layout">
+		<!--menu start-->
+		<div class="pure-u sansfont" id="menu">
+			
+			<div class="pure-menu pure-menu-open">
+				<a href="index.html" class="pure-menu-heading">Jwalk</a>
+				<ul>
+					<li><a href="start.html">Jwalk(element)</a></li>
+					<li class="pure-menu-selected"><a href="method.html">Method</a></li>
+					<li><a href="demo.html">Demo</a></li>
+				</ul>
+				<ul>
+					<li><a href="method.html#animate">.animate()</a></li>
+					<li><a href="method.html#play">.play/replay()</a></li>
+					<li><a href="method.html#pause">.pause/stop()</a></li>
+					<li><a href="method.html#reset">.reset()</a></li>
+					<li><a href="method.html#step">.step/cycle()</a></li>
+					<li><a href="method.html#width">.width/height()</a></li>
+					<li><a href="method.html#toggle">.toggle/hide/show()</a></li>
+					<li><a href="method.html#slide">.slideUp/Down()</a></li>
+					<li><a href="method.html#extend">.extend()</a></li>
+				</ul>
+			</div>
+			
+		</div>
+		<!--menu end-->
+		<!--main start-->
+		<div class="pure-u" id="main">
+			
+			<div class="pure-g-r header sansfont">
+				<div class="pure-u-1">
+					<h1>Jwalk Method</h1>
+					<p>The introduction and usage for Jwalk's functions .</p>
+				</div>
+			</div>
+			
+			<div class="pure-g-r">
+				<div class="pure-u-1 sansfont content">
+					
+					<div class="padding-box">
+						<p>在介绍关于Jwalk方法之前，我们先根据<a href="start.html">上一步</a>的操作，来实例化一个对象，<code>var A = Jwalk(element);</code></p>
+						<!--animate start-->
+						<h3><a name="animate">Animate:</a></h3>
+						<p>animate用于对于动画的初始化操作，不会自动执行。该方法会返回this对象，可以实现链式操作，后面添加play/replay/cycle方法执行。<br/>animate接收4个参数，（css样式，动画执行的时间，动画效果，回调函数）<br/>
+						写法方式与jquery相同，可以简写为animate(样式,时间,回调)，或者animate(样式,动画效果,回调)以及animate(样式,回调)，参数不设置的话采用默认参数，不同于jquery的地方是回调函数的写法。<br/>
+						回调函数接收一个参数data（自定义名称），这是一个包含有动画状态及样式的对象，通过data.status来获取当前这个animate的状态。（支持start开始,pause暂停,process执行中,end结束）4种不同状态，在初始化的时候不开启openProcess则<code>data.status == 'process' </code>永远不会触发。<br/>
+						后面是一段完整的代码：<input type="button" class="pure-button pure-button-primary pure-button-small" onclick="openHide(this,'animateSource')" value="展开代码" />
+						</p>
+						<pre id="animateSource" class="hide-code">
+A.animate({left:'+=100px'},500,'ease-in',function(data){
+		switch (data.status){
+			case 'start' :
+				console.log('动画开始');
+				break;
+			case 'process' :
+				console.log('动画进行中');
+				break;
+			case 'pause' :
+				console.log('动画暂停喽');
+				break;
+			case 'end' : 
+				console.log('动作结束啦');
+				break;
+		}
+	}).play();
+						</pre>
+						<!--animate end-->
+						
+						<!--play start-->
+						<h3><a name="play">Play:</a></h3>
+						<p>（无参数，不可级联）比较简单，开始执行动画。一般跟在animate或者step的后面，或者单独调用。<br/>动画暂停后，执行<code>play()</code>会继续暂停的动画。与replay有区别。</p>
+						<!--play end-->
+						
+						<!--replay start-->
+						<h3><a name="replay">Replay:</a></h3>
+						<p>（无参数，不可级联）如果动画暂停了，执行<code>play()</code>会继续刚才的动画，但是执行<code>replay()</code>会在当前暂停的地方，重新开始一次动画。</p>
+						<!--replay end-->
+						
+						<!--pause start-->
+						<h3><a name="pause">Pause:</a></h3>
+						<p>（无参数，不可级联）动画暂停，执行<code>pause()</code>后，无论动画执行到任何地方都会停止动画，停止动画后执行<code>play()</code>方法会继续动画。</p>
+						<!--pause end-->
+						
+						<!--stop start-->
+						<h3><a name="stop">Stop:</a></h3>
+						<p>（无参数，不可级联）动画停止执行，不同于pause方法，执行<code>stop()</code>后动画不是立即停止，而是停止与某个animate的end处，即把当前这个animate执行完后才会停止。停止后用play方法实现继续动画。<br/>
+						例如当前有5个animate已经在执行了，在第三个执行过程中，我触发<code>stop()</code>，该动画仍然会执行，直到第三个动画执行完，然后动画停止。如果我在过程中执行<code>pause()</code>的话，那么动画就在当前时间停止了。</p>
+						<!--stop end-->
+						
+						<!--reset start-->
+						<h3><a name="reset">Reset:</a></h3>
+						<p>（无参数，不可级联）动画重置，实际上是把element的样式重置，只会还原最后一次动画初始化时的样式。<br/>
+						比如同一个实例中，我执行<code>A.animate(样式一).play()</code>，然后<code>reset()</code>，这时会还原到样式一之前的样式;<br/>
+						然后如果我继续执行<code>A.animate(样式二).play()</code>，如果再次reset的话，不会还原到样式一之前的样式了，而是会还原到样式二之前的样式。只有重置animate才会触发这种情况，执行play/pause/stop/step等都不会覆盖reset中的样式。
+						</p>
+						<!--reset end-->
+						
+						<!--step start-->
+						<h3><a name="step">Step:</a></h3>
+						<p>（返回this对象，接收参数，可级联）动画会按照step中定义的顺序执行动画。<br/>
+						执行step时首先要有一组顺序动画：<code>A.animate(样式一).animate(样式二).animate(样式三).animate(样式四)</code>
+						如果step中是一组数字比如<code>A.step(3,1,0,2).play()</code>那么样式的设置顺序就是（样式四>样式二>样式一>样式三）<br/>
+						或者我也可以这样执行<code>A.step(2).play()</code>，那么只会执行样式三。<br/>
+						使用step方法这里有几点需要注意：
+						</p>
+						<ul>
+							<li>step中的步骤是从0开始的。</li>
+							<li>step中定义的动作如果不存在，多步的话该步骤会被跳过。如果是单步，不会执行。</li>
+							<li>step不会自动执行，需要后面添加play()/replay()/cycle()来触发动画</li>
+							<li>step优先级高于animate，如果在某个animate的回调函数中执行了step，该animate链中后面的animate会被打断。</li>
+						</ul>
+						<!--step end-->
+						
+						<!--cycle start-->
+						<h3><a name="cycle">Cycle:</a></h3>
+						<p>（接收参数，不可级联）循环执行动画，可以接收参数：执行次数。如果不设置参数或者设置次数为0，那么会进行无限循环。<br/>
+						<code>A.cycle(10);</code>代表执行10次。<br/>
+						触发循环，第一次直接可以调用cycle方法，如果动画被pause/stop了，需要使用play方法继续动画，如果使用cycle会进入新一轮的循环。
+						</p>
+						<!--cycle end-->
+						
+						<!--width/height start-->
+						<h3><a name="width">Width/Height:</a></h3>
+						<p>（无参数，不可级联），这个使用起来很简单了。获取某个元素的width或者height值(去除padding,border后的宽高)，支持获取隐藏的元素，以及高度为0但是实际高度大于0的元素的宽高。<br/>
+						比如我这里隐藏着一段代码，通过管理员工具可以查看。无width/height，我点击后面<input type="button" class="pure-button pure-button-primary pure-button-small" onclick="msg('widthSource')" value="获取宽度和高度" style="margin:0 0.2em;" />按钮。
+						</p>
+						<pre id="widthSource" class="hide-code">
+var $ = function(id){ return document.getElementById(id) || id };
+function msg(elem){
+	var codeObj = Jwalk($(elem));
+	alert (codeObj.width()+'\n'+codeObj.height());
+};</pre>
+						<!--width/height end-->
+						
+						<!--toggle start-->
+						<h3><a name="toggle">Toggle/Hide/Show:</a></h3>
+						<p>（接收参数，不可级联）使用过jquery的朋友对这个方法应该非常熟悉了，这里的调用与jquery一样，<code>A.toggle()</code>淡入淡出的方式在显示和隐藏状态间切换，hide()隐藏元素，show()显示元素。<br/>
+						接收两个参数，第一个是时间，第二个是结束后的回调函数。不设置时间的话采用默认400ms</p>
+						<!--toggle end-->
+						
+						<!--slide start-->
+						<h3><a name="slide">slideToggle/slideUp/slideDown:</a></h3>
+						<p>（接收参数，不可级联）同样是与jquery相同的用法，<code>A.slideToggle()</code>使用滑动效果在显示和隐藏状态间切换。slideUp向上滑动/slideDown向下滑动，接收参数方式同toggle。</p>
+						<!--slide end-->
+						
+						<!--extend start-->
+						<h3><a name="slide">Extend:</a></h3>
+						<p>（接收参数，不可级联）扩展方法，使用该方法可以添加自定义的动画效果。<br/>Jwalk中的hide/show/slideToggle等方法就是通过<code>extend()</code>实现的，所以也可以通过修改Jwalk.js脚本自己添加后压缩使用。</p>
+						<p>Jwalk中还有一个<code>init()</code>方法，是用来初始化动画过程中的一些变量的。如果不涉及开发扩展函数的话，不要轻易使用该方法。init会返回当前对象，可以链式操作。</p>
+						<pre id="hideSource" class="hide-code">
+hide : function () {
+	var speed = (arguments.length > 0 && typeof arguments[0] != 'function') ? arguments[0] : 'normal',
+		callback = ( arguments.length > 0 ) ? arguments[arguments.length-1] : null;
+	_this._act({opacity:'0'},speed,function(){
+		_this.elem.style.display = 'none';
+		if(callback && typeof callback === 'function'){
+			callback();
+		};
+	});
+}</pre>
+						<input type="button" class="pure-button pure-button-primary pure-button-small" onclick="openHide(this,'hideSource')" value="展开代码" />
+						<!--extend end-->
+						<p>上面的hide方法就是通过extend扩展实现的。其中用到了封装的一个_act方法，该方法会初始化Jwalk中的变量，然后监听回调函数为data.status == 'end' 的时候执行传入的回调函数。代码部分比较简单。大家可以查看源代码。</p>
+					</div>
+					
+
+
+					<!--bottom start-->
+					<div class="pure-g-r bottom">
+
+						<div class="pure-u-2-5">
+							<div class="padding-box-1">
+								<p>
+									写个库文档，正好用了下<span class="sansfont" style="color:#3b8bba;">Yahoo</span>的前端框架<a class="sansfont" href="http://purecss.io/" target="_blank">Pure Css</a><br/>
+									试用感受：轻量级，够简洁，大厂产品果然霸气！
+								</p>
+							</div>
+						</div><div class="pure-u-1-5 align-center">
+							<a href="#" class="sansfont center-name" target="_blank">
+								Jwalk
+							</a>
+						</div><div class="pure-u-2-5">
+							<div class="padding-box-1 bottom-right">
+								<p class="sansfont">
+									<a href="https://github.com/yui/pure/">GitHub Project</a><br/>
+									<span class="copyright">© 2013 XxOo. All rights reserved.</span>
+								</p>
+							</div>
+						</div>
+
+					</div>
+					<!--bottom end-->
+				</div>
+				
+			</div>
+		</div>
+		<!--main end-->
+	</div>
+<script type="text/javascript" src="v1.0/Jwalk.min.js"></script>
+<script>
+var $ = function(id){ return document.getElementById(id) || id };
+function msg(elem){
+	var codeObj = Jwalk($(elem));
+	alert ('宽度是：'+codeObj.width()+'\n高度是：'+codeObj.height());
+};
+function openHide(elem,actId){
+	var codeObj = Jwalk($(actId));
+	elem.value == '展开代码' ?
+	codeObj.slideDown(function(){
+		elem.value = '关闭代码';
+	}) :
+	codeObj.slideUp(function(){
+		elem.value = '展开代码';
+	}) ;
+};
+</script>
+</body>
+</html>
