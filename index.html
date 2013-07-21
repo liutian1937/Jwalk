@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jwalk - JavaScript Animation Library</title>
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.0/pure-min.css" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="css/style.css" />
+<body>
+	<div class="pure-g-r" id="layout">
+		<!--menu start-->
+		<div class="pure-u sansfont" id="menu">
+			
+			<div class="pure-menu pure-menu-open">
+				<a href="index.html" class="pure-menu-heading">Jwalk</a>
+				<ul>
+					<li><a href="start.html">Jwalk(element)</a></li>
+					<li><a href="method.html">Method</a></li>
+					<li><a href="demo.html">Demo</a></li>
+				</ul>
+				<ul>
+					<li><a href="method.html#animate">.animate()</a></li>
+					<li><a href="method.html#play">.play/replay()</a></li>
+					<li><a href="method.html#pause">.pause/stop()</a></li>
+					<li><a href="method.html#reset">.reset()</a></li>
+					<li><a href="method.html#step">.step/cycle()</a></li>
+					<li><a href="method.html#width">.width/height()</a></li>
+					<li><a href="method.html#toggle">.toggle/hide/show()</a></li>
+					<li><a href="method.html#slide">.slideUp/Down()</a></li>
+					<li><a href="method.html#extend">.extend()</a></li>
+				</ul>
+			</div>
+			
+		</div>
+		<!--menu end-->
+		<!--main start-->
+		<div class="pure-u" id="main">
+			
+			<div class="pure-g-r  hgroup sansfont">
+				<div class="pure-u-1">
+					<h1>Jwalk</h1>
+					<h2>Jwalk - JavaScript Animation Library . Smaller , Faster , Stronger</h2>
+					<p>
+						<a class="pure-button pure-button-primary" href="start.html">Get Start</a>
+						<a class="pure-button" href="https://github.com/liutian1937/Jwalk" target="_blank">View Source On Github</a>
+					</p>
+				</div>
+				<div class="pure-u-3-4">
+					<pre class="sansfont">&lt;script type="text/javascript" src="http://liutian1937.github.io/Jwalk/v1.0/Jwalk.min.js"&gt;&lt;/script&gt; </pre>
+				</div>
+			</div>
+			
+			<div class="pure-g-r">
+				<div class="pure-u-1 heifont content">
+					
+					<div class="padding-box">
+						<h3>Jwalk是用来做什么的？</h3>
+						<p>前端开发过程中经常会用到一些动画效果，比如某个div的放大，缩小，左右移动，实现这些效果都是通过Js设置元素的style样式，我们可能会借助Jquery或者其他脚本库提供的动画接口来更容易的实现相关效果。但是如果我们可能只会用到Jquery的动画效果，以及一些简单的选择器，那么（在天朝）加载这个脚本库就显得多余了。为什么在天朝就多余，国内的网络环境与网速是：你懂得！所以为了适应国情，封装了这个Mini版的动画库-Jwalk(名字可轻喷)，Min压缩版+Gzip=2K</p>
+						<p>所以时间单位都为ms，由于脚本计时器是队列执行方式，可能会产生阻塞问题导致时间不准确。所以采用CSS3的动画与采用JS方式上，动画速度与流畅性都会有差别。对低版本浏览器动画效果要求高的话需要对低版本浏览器单独设置动画时间。在Jwalk中为了减小动画速度的差距，我加入了代码：<br/><code>params.speed = Unit.css3 ? params.speed : parseInt(params.speed/1.5) ;</code>，一个1.5倍的时间差。</p>
+						<p>动画执行的方式采用Css3/Js Tween算法相结合的方式，对于高级浏览器采用css3执行动画效果，不支持css3的采用缓动函数，默认集成了（linear，ease-in，ease-out，ease-in-out）四种动画效果，如果需要更多效果，可以参考<a href="http://easings.net/zh-cn" target="_blank">Easing functions</a>，<a href="http://www.gizma.com/easing/" target="_blank">Easing Equations</a>，<a href="http://www.cnblogs.com/cloudgamer/archive/2009/01/06/Tween.html" target="_blank">JavaScript Tween算法及缓动效果</a>。</p>
+						<p>Jwalk未压缩版本有粗糙的注释，大家可以扩展功能后自行压缩，欢迎尽情蹂躏。<br/>时间匆忙，不足之处欢迎给出意见。Email：ok8008@yeah.net</p>
+					</div>
+					
+					<div class="pure-g-r">
+						<div class="pure-u-1-3">
+							<div class="padding-box">
+								<h4>普通属性：</h4>
+								<ul>
+									<li>多浏览器兼容，IE6-10，Ghrome，Firefox，Safari，Opera</li>
+									<li>支持CSS3的浏览器采用CSS3的Transition实现动画，效果更流畅</li>
+									<li>支持定义多个连续动画，支持按照自定义的动画顺序执行</li>
+									<li>常用动画，hide/show/toggle(显隐)，slideUp/slideDown/slideToggle(上下滚)</li>
+								</ul>
+							</div>
+						</div><div class="pure-u-1-3">
+							<div class="padding-box">
+								<h4>文艺属性：</h4>
+								<ul>
+									<li>animate修改CSS样式，支持数学运算符"+=","-="</li>
+									<li>定义速度，动画执行方式Tween，以及回调，animate(样式,速度,效果,回调) </li>
+									<li>普通控制：play(开始)，pause(暂停)，replay(重新开始)，reset(还原)</li>
+									<li>高级控制：cycle(动画循环/次数)，step(按照顺序执行/执行第N个动画)</li>
+								</ul>
+							</div>
+						</div><div class="pure-u-1-3">
+							<div class="padding-box">
+								<h4>屌丝属性：</h4>
+								<ul>
+									<li>支持EM->PX的转换，可以定义换算单位，默认16，即1em = 16px </li>
+									<li>增加Extend扩展函数，可以根据需求添加自定义动画</li>
+									<li>每个animate都有回调，并支持状态监测，start/pause/process/end</li>
+									<li>process进程，有开关，默认关闭，动画执行时回调当前CSS的属性值</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					
+					<div class="pure-g-r">
+						<div class="pure-u-1-2">
+						
+							<div class="pure-u-1 margin-box animateWrap">
+								<a href="javascript:;" onclick="move('prev')" id="prevBtn" class="pure-button prev sansfont">Prev</a>
+								<a href="javascript:;" onclick="move('next')" id="nextBtn" class="pure-button next sansfont">Next</a>
+								<div id="animate" class="pure-u">
+									<div class="bg-green pure-u"></div><div class="bg-blue pure-u"></div><div class="bg-red pure-u"></div><div class="bg-purple pure-u"></div>
+								</div>
+							</div>
+							
+							<div class="pure-u-1 margin-box">
+								<p>上面demo是一个简单的左右滑动的效果，为了体现代码的简洁（嘿嘿），没有做成无缝的效果。滚动是由左右按钮控制，增减margenLeft的值（百分比形式）实现的动画效果。<a href="demo.html">更多Demo</a></p>
+								<h4>HTML ：</h4>
+								<pre>&lt;div class="pure-g-r margin-box animateWrap"&gt;
+	&lt;a href="javascript:;" onclick="move('prev')" id="prevBtn" class="pure-button prev sansfont"&gt;Prev&lt;/a&gt;
+	&lt;a href="javascript:;" onclick="move('next')" id="nextBtn" class="pure-button next sansfont"&gt;Next&lt;/a&gt;
+	&lt;div id="animate" class="pure-u"&gt;
+		&lt;div class="bg-green pure-u"&gt;&lt;/div&gt;&lt;div class="bg-blue pure-u"&gt;&lt;/div&gt;&lt;div class="bg-red pure-u"&gt;&lt;/div&gt;&lt;div class="bg-purple pure-u"&gt;&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt; </pre>
+							</div>
+							
+						</div><div class="pure-u-1-2">
+							<div class="padding-box">
+								<h4>Javascript：</h4>
+								
+								<pre>&lt;script&gt;
+var $ = function(id){ return document.getElementById(id) || id };
+var elem = $('animate'), prev = $('prevBtn'), next = $('nextBtn'), len = 4, cur = 0, per;
+Jwalk(prev).hide();
+function move(type){
+	if(type == 'next'){
+		cur = (cur &lt; len - 1 ) ? cur + 1 : len -1;
+		Jwalk(prev).show();
+	}else if(type == 'prev'){
+		cur = (cur &gt; 1 ) ? cur - 1 : 0;
+		Jwalk(next).show();
+	};
+	if(cur == 3){
+		Jwalk(next).hide();
+	}else if(cur == 0){
+			Jwalk(prev).hide();
+	};
+	per = '-'+100*cur+'%';
+	Jwalk(elem).animate({marginLeft:per},300).play();
+}
+&lt;/script&gt; </pre>
+							</div>
+						</div>
+					</div>
+
+					<!--bottom start-->
+					<div class="pure-g-r bottom">
+
+						<div class="pure-u-2-5">
+							<div class="padding-box-1">
+								<p>
+									写个库文档，正好用了下<span class="sansfont" style="color:#3b8bba;">Yahoo</span>的前端框架<a class="sansfont" href="http://purecss.io/" target="_blank">Pure Css</a><br/>
+									试用感受：轻量级，够简洁，大厂产品果然霸气！
+								</p>
+							</div>
+						</div><div class="pure-u-1-5 align-center">
+							<a href="#" class="sansfont center-name" target="_blank">
+								Jwalk
+							</a>
+						</div><div class="pure-u-2-5">
+							<div class="padding-box-1 bottom-right">
+								<p class="sansfont">
+									<a href="https://github.com/yui/pure/">GitHub Project</a><br/>
+									<span class="copyright">© 2013 XxOo. All rights reserved.</span>
+								</p>
+							</div>
+						</div>
+
+					</div>
+					<!--bottom end-->
+				</div>
+				
+			</div>
+		</div>
+		<!--main end-->
+	</div>
+
+<script type="text/javascript" src="v1.0/Jwalk.min.js"></script>
+<script>
+var $ = function(id){ return document.getElementById(id) || id };
+var elem = $('animate'), prev = $('prevBtn'), next = $('nextBtn'), len = 4, cur = 0, per;
+Jwalk(prev).hide();
+function move(type){
+	if(type == 'next'){
+		cur = (cur < len - 1 ) ? cur + 1 : len -1;
+		Jwalk(prev).show();
+	}else if(type == 'prev'){
+		cur = (cur > 1 ) ? cur - 1 : 0;
+		Jwalk(next).show();
+	};
+	if(cur == 3){
+		Jwalk(next).hide();
+	}else if(cur == 0){
+			Jwalk(prev).hide();
+	};
+	per = '-'+100*cur+'%';
+	Jwalk(elem).animate({marginLeft:per},300).play();
+}
+</script>
+</body>
+</html>

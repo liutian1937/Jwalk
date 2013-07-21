@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jwalk - JavaScript Animation Library</title>
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.0/pure-min.css" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="css/style.css" />
+<body>
+	<div class="pure-g-r" id="layout">
+		<!--menu start-->
+		<div class="pure-u sansfont" id="menu">
+			
+			<div class="pure-menu pure-menu-open">
+				<a href="index.html" class="pure-menu-heading">Jwalk</a>
+				<ul>
+					<li class="pure-menu-selected"><a href="start.html">Jwalk(element)</a></li>
+					<li><a href="method.html">Method</a></li>
+					<li><a href="demo.html">Demo</a></li>
+				</ul>
+				<ul>
+					<li><a href="method.html#animate">.animate()</a></li>
+					<li><a href="method.html#play">.play/replay()</a></li>
+					<li><a href="method.html#pause">.pause/stop()</a></li>
+					<li><a href="method.html#reset">.reset()</a></li>
+					<li><a href="method.html#step">.step/cycle()</a></li>
+					<li><a href="method.html#width">.width/height()</a></li>
+					<li><a href="method.html#toggle">.toggle/hide/show()</a></li>
+					<li><a href="method.html#slide">.slideUp/Down()</a></li>
+					<li><a href="method.html#extend">.extend()</a></li>
+				</ul>
+			</div>
+			
+		</div>
+		<!--menu end-->
+		<!--main start-->
+		<div class="pure-u" id="main">
+			
+			<div class="pure-g-r header sansfont">
+				<div class="pure-u-1">
+					<h1>Jwalk(element, params)</h1>
+					<p>Initialize Jwalk script and set up some basic parameters .</p>
+				</div>
+			</div>
+			
+			<div class="pure-g-r">
+				<div class="pure-u-1 sansfont content">
+					
+					<div class="padding-box">
+						<h3>Jwalk初始化</h3>
+						<div class="intro">
+							<p>为了减小学习成本，Jwalk的参数采用同Jquery相同的写法，并支持链式操作。如<code>Jwalk(elem).animate().play();</code></p>
+							<p>初始化Jwalk需要两个参数，<br/>
+								第一个是Element对象（<span class="red">参数必须</span>），可通过<code>document.getElementById(id)</code>获取;<br/>
+								第二个参数是修改初始化的默认设置（<span>参数可选</span>），可设置选项：
+							</p>
+							<ul>
+								<li>openProcess : false, //是否开启时时进程，消耗性能，默认关闭</li>
+								<li>easing : 'linear', //默认动画效果</li>
+								<li>em2px : 16 ,//em与px转换单位，默认1em = 16px</li>
+								<li>interval : 0 //两个animate动画之间的时间间隔</li>
+							</ul>
+							<h4>Code：</h4>
+<pre>
+var elem = document.getElementById('animate');
+Jwalk(elem,{
+    openProcess : true,
+    easing : 'linear',
+    em2px : 10,
+    interval : 400
+});
+//如果采用默认设置的话直接
+Jwalk(elem)
+</pre>
+							<p><span class="notice">不同与Jquery的地方是，jquery直接定义animate即可执行动画，Jwalk需要定义animate之后执行<b>play/replay/cycle()</b>方法才会执行。</span><br/>如果有多个animate执行，建议初始化的时候进行animate定义。实现控制部分与初始化分离，初始化animate后，可以通过<code>step()</code>设置执行顺序，step参数从0开始。</p>
+						</div>
+					</div>
+					
+					<div class="pure-g-r">
+						<div class="pure-u-1-2">
+							<div class="padding-box">
+								<h4>支持的方法：</h4>
+								<ul>
+									<li><code><a href="method.html#animate">animate(样式,时间,动画效果,回调)</a></code>：定义动画，默认按照定义顺序执行动画，返回对象可级联</li>
+									<li><code><a href="method.html#play">play/pause/stop()</a></code>：播放/暂停/停止动画</li>
+									<li><code><a href="method.html#replay">replay()</a></code>：<span class="red">从当前位置</span>重新播放动画，不会继续原来的动画</li>
+									<li><code><a href="method.html#cycle">cycle(循环次数/非必须)</a></code>：循环动画，一次play完全执行代表一次循环，无参数代表无限循环，可级联</li>
+									<li><code><a href="method.html#step">step(顺序/或者第几个动画)</a></code>：按照自定义顺序（animate定义的顺序）执行，或者执行固定的第几个动画</li>
+									<li><code><a href="method.html#reset">reset()</a></code>：重置动画，Element对象的样式也会重置到最后一次重写animate的时候</li>
+									<li><code><a href="method.html#extend">extend(对象)</a></code>：扩展方法，可以实现自定义动画</li>
+									<li><code><a href="method.html#toggle">toggle(速度,回调)</a></code>：显示/隐藏进行切换，另外有hide/show(速度,回调)</li>
+									<li><code><a href="method.html#slidetoggle">slideToggle(速度,回调)</a></code>：显示/隐藏进行切换，另外有hide/show(速度,回调)</li>
+								</ul>
+							</div>
+						</div><div class="pure-u-1-2">
+							<div class="padding-box">
+								<h4>回调数据以及监听：</h4>
+								<ul>
+									<li>通过判断isAnimate来确定动画是否在执行中</li>
+									<li>animate的回调函数接收数据data，根据data.status判断动画状态，一共四种状态start,process,pause,end</li>
+									<li>如果设置openProcess为true的时候，data中包含即时的css样式，可以通过data.result获取</li>
+									<li>toggle/hide/show,slideToggle/slideUp/slideDown的回调函数中没有状态的判断，回调函数在会动画执行完后触发。</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					
+
+					<!--bottom start-->
+					<div class="pure-g-r bottom">
+
+						<div class="pure-u-2-5">
+							<div class="padding-box-1">
+								<p>
+									写个库文档，正好用了下<span class="sansfont" style="color:#3b8bba;">Yahoo</span>的前端框架<a class="sansfont" href="http://purecss.io/" target="_blank">Pure Css</a><br/>
+									试用感受：轻量级，够简洁，大厂产品果然霸气！
+								</p>
+							</div>
+						</div><div class="pure-u-1-5 align-center">
+							<a href="#" class="sansfont center-name" target="_blank">
+								Jwalk
+							</a>
+						</div><div class="pure-u-2-5">
+							<div class="padding-box-1 bottom-right">
+								<p class="sansfont">
+									<a href="https://github.com/yui/pure/">GitHub Project</a><br/>
+									<span class="copyright">© 2013 XxOo. All rights reserved.</span>
+								</p>
+							</div>
+						</div>
+
+					</div>
+					<!--bottom end-->
+				</div>
+				
+			</div>
+		</div>
+		<!--main end-->
+	</div>
+
+</body>
+</html>
