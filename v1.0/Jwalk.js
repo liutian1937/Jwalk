@@ -574,7 +574,7 @@
 							}else{
 								styles[j] = Math.ceil(tween(t,start[j],end[j]-start[j],d)) + 'px';
 							}
-						}else if(start[j].match(/\%/) && end[j].match(/\%/)){
+						}else if(typeof start[j] === 'string' && typeof end[j] === 'string' && start[j].match(/\%/) && end[j].match(/\%/)){
 							styles[j] = Math.ceil(tween(t,parseInt(start[j]),parseInt(end[j])-parseInt(start[j]),d))+'%';
 						};
 					};
